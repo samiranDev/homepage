@@ -24,13 +24,13 @@
 *{ box-sizing:border-box }
 html,body{ height:100% }
 html{
-  scrollbar-gutter: stable both-edges; /* prevent layout width shifting when scrollbars appear */
+  scrollbar-gutter: stable both-edges;
 }
 body{
   margin:0; color:var(--text);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
   background:#000; min-height:100dvh; overflow-x:hidden;
-  overflow-y: scroll; /* reserve vertical scrollbar space for stability */
+  overflow-y: scroll;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -65,10 +65,10 @@ body{
 }
 @keyframes brandFlow{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 
-/* ===== Content layout: fixed left ~33.33%, fluid right ===== */
+/* ===== Content layout ===== */
 .content{
   display:grid; gap:20px; align-items:stretch;
-  grid-template-columns: minmax(320px, 33.33%) 1fr; /* fixed-left, fluid-right */
+  grid-template-columns: minmax(320px, 33.33%) 1fr;
 }
 @media (max-width:980px){
   .content{ grid-template-columns:1fr }
@@ -77,11 +77,10 @@ body{
 
 .card{ background:var(--glass); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow-1),var(--shadow-2); backdrop-filter:blur(12px) }
 .pane{ min-height:var(--pane-h); display:flex; flex-direction:column }
-@media (min-width:981px){ .pane{ height:var(--pane-h) } } /* equal height */
+@media (min-width:981px){ .pane{ height:var(--pane-h) } }
 
-/* Ensure stable widths for columns */
 .clock-card{ flex:0 0 auto; min-width:300px; }
-.panel{ min-width:0; } /* prevent overflow from long content on right */
+.panel{ min-width:0; }
 
 /* ===== Clock ===== */
 .clock-card{ padding:18px; align-items:center; justify-content:center; gap:8px }
@@ -92,7 +91,7 @@ canvas#dial{ width:min(320px,88%); aspect-ratio:1/1; height:auto; border-radius:
 
 /* ===== Search ===== */
 .panel{ padding:18px; gap:14px; position:relative }
-.searchbar{ position:relative; } /* containing block for suggestions */
+.searchbar{ position:relative; }
 .field{ display:flex; align-items:center; gap:12px; border-radius:18px; padding:12px;
   background:var(--glass-strong); border:1px solid rgba(255,255,255,.10); box-shadow:var(--shadow-1),var(--shadow-2); transition:.25s }
 .field:focus-within{ box-shadow:0 0 0 3px var(--ring), var(--shadow-1); transform:translateY(-1px); background:rgba(255,255,255,.14); will-change: transform; }
@@ -100,7 +99,7 @@ canvas#dial{ width:min(320px,88%); aspect-ratio:1/1; height:auto; border-radius:
 input#q{ flex:1; font-size:16px; color:var(--text); background:transparent; border:none; outline:none; padding:8px 2px; min-width:0; }
 .ai-btn{ border:none; cursor:pointer; padding:10px 18px; border-radius:999px; font-weight:700; color:#0b0b0b; background:linear-gradient(90deg,#a78bfa,#60a5fa); box-shadow:0 8px 24px rgba(96,165,250,.35) }
 
-/* ===== Top-right Kebab ===== */
+/* ===== Kebab ===== */
 .kebab{ position:fixed; top:14px; right:14px; z-index:9999; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06);
   border-radius:12px; padding:8px 10px; cursor:pointer; font-weight:700; font-size:14px; color:var(--text) }
 .kebab:hover{ background:rgba(255,255,255,.12) }
@@ -112,11 +111,9 @@ input#q{ flex:1; font-size:16px; color:var(--text); background:transparent; bord
 .menu hr{ border:none; height:1px; background:rgba(255,255,255,.12); margin:6px 0 }
 .menu select{ width:100%; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); border-radius:8px; padding:6px 8px; color:var(--text) }
 
-/* ===== Suggestions (stable, under searchbar, no layout shift) ===== */
+/* ===== Suggestions ===== */
 .suggest{
-  position:absolute;
-  left:0; right:0;
-  top: calc(100% + 8px); /* sits right below .searchbar */
+  position:absolute; left:0; right:0; top: calc(100% + 8px);
   background:rgba(20,20,22,.98);
   border:1px solid rgba(255,255,255,.10);
   border-radius:16px; padding:6px;
@@ -135,14 +132,14 @@ input#q{ flex:1; font-size:16px; color:var(--text); background:transparent; bord
 .tab{ padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700; cursor:pointer; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06) }
 .tab.active{ box-shadow:0 0 0 2px var(--ring) inset; background:rgba(255,255,255,.14) }
 
-/* Chips grid: auto-adjust, dense packing to avoid page break feel */
+/* Chips grid */
 .chips{
   display:grid;
-  grid-template-columns:repeat(6,1fr); /* keep repeat() for JS column counting */
+  grid-template-columns:repeat(6,1fr);
   gap:10px; margin-top:4px;
-  overflow:visible;                 /* avoid inner scrollbars that shift layout */
+  overflow:visible;
   align-content:start; grid-auto-rows:max-content;
-  grid-auto-flow: row dense;        /* pack items tightly */
+  grid-auto-flow: row dense;
 }
 @media (max-width:1080px){ .chips{ grid-template-columns:repeat(4,1fr) } }
 @media (max-width:640px){ .chips{ grid-template-columns:repeat(3,1fr); gap:8px } }
@@ -151,9 +148,7 @@ input#q{ flex:1; font-size:16px; color:var(--text); background:transparent; bord
   display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:14px; text-decoration:none; color:var(--text);
   background:rgba(255,255,255,.09);
   border:1px solid rgba(255,255,255,.12); transition:transform .12s, background .15s, border .15s; align-self:start;
-  min-height:44px;                 /* stable row height for JS height lock */
-  min-width:0;                     /* prevent overflow from long titles */
-  white-space:nowrap;
+  min-height:44px; min-width:0; white-space:nowrap;
 }
 .chip:hover{ transform:translateY(-2px); background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.22) }
 .chip img{ width:20px; height:20px; border-radius:6px; object-fit:cover; flex:0 0 auto; }
@@ -168,7 +163,7 @@ input#q{ flex:1; font-size:16px; color:var(--text); background:transparent; bord
 /* ===== Footer ===== */
 footer{ position:fixed; left:0; right:0; bottom:8px; text-align:center; color:var(--muted); font-size:12px }
 
-/* ===== Modal (category sections with children) ===== */
+/* ===== Modal ===== */
 .modal{ position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.55); z-index:9999; padding:20px }
 .modal.show{ display:grid }
 .modal-card{ width:min(980px,96vw); background:rgba(30,30,34,.8); border:1px solid rgba(255,255,255,.12); border-radius:18px; box-shadow:var(--shadow-1); backdrop-filter:blur(16px); padding:16px }
@@ -191,7 +186,6 @@ footer{ position:fixed; left:0; right:0; bottom:8px; text-align:center; color:va
 .row{ display:grid; grid-template-columns: 1fr 2fr auto; gap:8px; align-items:center; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:8px }
 .row input{ width:100%; padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:var(--text); outline:none }
 .row .ops{ display:flex; gap:6px }
-
 </style>
 </head>
 <body>
@@ -253,7 +247,7 @@ footer{ position:fixed; left:0; right:0; bottom:8px; text-align:center; color:va
 
   <footer>Made for you · fast, clean, minimal.</footer>
 
-  <!-- Modal: category sections -->
+  <!-- Modal -->
   <div id="scModal" class="modal" aria-hidden="true">
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="scTitle">
       <div class="modal-head">
@@ -288,17 +282,13 @@ const LS_SHORTCUTS='CUSTOM_SHORTCUTS_V3';
 const LS_CATS='CUSTOM_SHORTCUTS_CATS_V1';
 const LS_UI='SHORTCUTS_UI_STATE';
 
-/* ===== Defaults ===== */
-const DEFAULT_CATEGORIES=['Google','Dev','Work','Social','AI','Other'];
+/* ===== Defaults (expanded) ===== */
+const DEFAULT_CATEGORIES=[
+  'Google','Dev','Work','Social','AI','News','Learning','Entertainment','Shopping','Finance','Tools','Other'
+];
+
 const DEFAULT_SHORTCUTS=[
-  {title:"Ads",url:"https://ads.google.com/",category:"Google"},
-  {title:"Ad Manager",url:"https://admanager.google.com/",category:"Google"},
-  {title:"AdSense",url:"https://adsense.google.com/",category:"Google"},
-  {title:"Analytics",url:"https://analytics.google.com/",category:"Google"},
-  {title:"Android",url:"https://www.android.com/",category:"Google"},
-  {title:"Android Auto",url:"https://www.android.com/auto/",category:"Google"},
-  {title:"Android Developers",url:"https://developer.android.com/",category:"Google"},
-  {title:"Arts & Culture",url:"https://artsandculture.google.com/",category:"Google"},
+  // Google
   {title:"Blogger",url:"https://www.blogger.com/",category:"Google"},
   {title:"Books",url:"https://books.google.com/",category:"Google"},
   {title:"Calendar",url:"https://calendar.google.com/",category:"Google"},
@@ -308,21 +298,19 @@ const DEFAULT_SHORTCUTS=[
   {title:"Cloud Docs",url:"https://cloud.google.com/docs",category:"Google"},
   {title:"Colab",url:"https://colab.research.google.com/",category:"Google"},
   {title:"Contacts",url:"https://contacts.google.com/",category:"Google"},
-  {title:"Domains",url:"https://domains.google/",category:"Google"},
-  {title:"Drive",url:"https://drive.google.com/",category:"Google"},
   {title:"Docs",url:"https://docs.google.com/",category:"Google"},
+  {title:"Drive",url:"https://drive.google.com/",category:"Google"},
   {title:"Earth",url:"https://earth.google.com/web/",category:"Google"},
   {title:"Fi",url:"https://fi.google.com/",category:"Google"},
-  {title:"Finance",url:"https://finance.google.com/",category:"Google"},
+  {title:"Finance (Google)",url:"https://finance.google.com/",category:"Google"},
   {title:"Flights",url:"https://www.google.com/flights",category:"Google"},
   {title:"Forms",url:"https://forms.google.com/",category:"Google"},
   {title:"Gmail",url:"https://mail.google.com/",category:"Google"},
-  {title:"Jamboard",url:"https://jamboard.google.com/",category:"Google"},
   {title:"Keep",url:"https://keep.google.com/",category:"Google"},
   {title:"Maps",url:"https://maps.google.com/",category:"Google"},
   {title:"Meet",url:"https://meet.google.com/",category:"Google"},
   {title:"Messages Web",url:"https://messages.google.com/web",category:"Google"},
-  {title:"News",url:"https://news.google.com/",category:"Google"},
+  {title:"News (Google)",url:"https://news.google.com/",category:"Google"},
   {title:"Pay/Wallet",url:"https://wallet.google/",category:"Google"},
   {title:"Photos",url:"https://photos.google.com/",category:"Google"},
   {title:"Play Store",url:"https://play.google.com/",category:"Google"},
@@ -340,12 +328,104 @@ const DEFAULT_SHORTCUTS=[
   {title:"YouTube",url:"https://www.youtube.com/",category:"Google"},
   {title:"YouTube Music",url:"https://music.youtube.com/",category:"Google"},
   {title:"YouTube TV",url:"https://tv.youtube.com/",category:"Google"},
+  {title:"Analytics",url:"https://analytics.google.com/",category:"Google"},
+  {title:"Google Ads",url:"https://ads.google.com/",category:"Google"},
+  {title:"Firebase Console",url:"https://console.firebase.google.com/",category:"Google"},
+  {title:"Play Console",url:"https://play.google.com/console",category:"Google"},
+
+  // Dev
   {title:"GitHub",url:"https://github.com/",category:"Dev"},
-  {title:"Stack Overflow",url:"https://stackoverflow.com/",category:"Dev"},
+  {title:"GitLab",url:"https://gitlab.com/",category:"Dev"},
+  {title:"Bitbucket",url:"https://bitbucket.org/",category:"Dev"},
   {title:"MDN",url:"https://developer.mozilla.org/",category:"Dev"},
+  {title:"Stack Overflow",url:"https://stackoverflow.com/",category:"Dev"},
+  {title:"npm",url:"https://www.npmjs.com/",category:"Dev"},
+  {title:"Docker Hub",url:"https://hub.docker.com/",category:"Dev"},
+  {title:"CodePen",url:"https://codepen.io/",category:"Dev"},
+  {title:"JSFiddle",url:"https://jsfiddle.net/",category:"Dev"},
+  {title:"Can I use",url:"https://caniuse.com/",category:"Dev"},
+  {title:"Vite Docs",url:"https://vitejs.dev/",category:"Dev"},
+  {title:"Next.js",url:"https://nextjs.org/",category:"Dev"},
   {title:"Vercel",url:"https://vercel.com/",category:"Dev"},
+  {title:"Netlify",url:"https://www.netlify.com/",category:"Dev"},
+  {title:"Cloudflare",url:"https://dash.cloudflare.com/",category:"Dev"},
+  {title:"Postman",url:"https://www.postman.com/",category:"Dev"},
+  {title:"Swagger Editor",url:"https://swagger.io/tools/swagger-editor/",category:"Dev"},
+  {title:"Regex101",url:"https://regex101.com/",category:"Dev"},
+  {title:"Bundlephobia",url:"https://bundlephobia.com/",category:"Dev"},
+  {title:"AWS Console",url:"https://console.aws.amazon.com/",category:"Dev"},
+  {title:"Azure Portal",url:"https://portal.azure.com/",category:"Dev"},
+
+  // AI
+  {title:"ChatGPT",url:"https://chat.openai.com/",category:"AI"},
+  {title:"Claude",url:"https://claude.ai/",category:"AI"},
+  {title:"Gemini",url:"https://gemini.google.com/",category:"AI"},
+  {title:"Perplexity",url:"https://www.perplexity.ai/",category:"AI"},
+  {title:"Midjourney",url:"https://www.midjourney.com/",category:"AI"},
+  {title:"Stable Diffusion",url:"https://stability.ai/",category:"AI"},
+  {title:"Runway",url:"https://runwayml.com/",category:"AI"},
+  {title:"Leonardo AI",url:"https://leonardo.ai/",category:"AI"},
+  {title:"GitHub Copilot",url:"https://github.com/features/copilot",category:"AI"},
+  {title:"Cursor IDE",url:"https://www.cursor.com/",category:"AI"},
+  {title:"Hugging Face",url:"https://huggingface.co/",category:"AI"},
+  {title:"Replicate",url:"https://replicate.com/",category:"AI"},
+
+  // Work
+  {title:"Notion",url:"https://www.notion.so/",category:"Work"},
+  {title:"Slack",url:"https://slack.com/signin",category:"Work"},
+  {title:"Trello",url:"https://trello.com/",category:"Work"},
+  {title:"Asana",url:"https://app.asana.com/",category:"Work"},
+  {title:"Jira",url:"https://www.atlassian.com/software/jira",category:"Work"},
+  {title:"Figma",url:"https://www.figma.com/",category:"Work"},
+  {title:"ClickUp",url:"https://app.clickup.com/",category:"Work"},
+  {title:"Miro",url:"https://miro.com/app/",category:"Work"},
+  {title:"Zoom",url:"https://zoom.us/",category:"Work"},
+  {title:"Calendly",url:"https://calendly.com/",category:"Work"},
+
+  // Social
   {title:"Twitter/X",url:"https://x.com/",category:"Social"},
-  {title:"LinkedIn",url:"https://www.linkedin.com/",category:"Social"}
+  {title:"LinkedIn",url:"https://www.linkedin.com/",category:"Social"},
+  {title:"Facebook",url:"https://www.facebook.com/",category:"Social"},
+  {title:"Instagram",url:"https://www.instagram.com/",category:"Social"},
+  {title:"TikTok",url:"https://www.tiktok.com/",category:"Social"},
+  {title:"Threads",url:"https://www.threads.net/",category:"Social"},
+  {title:"Reddit",url:"https://www.reddit.com/",category:"Social"},
+  {title:"Discord",url:"https://discord.com/app",category:"Social"},
+  {title:"WhatsApp Web",url:"https://web.whatsapp.com/",category:"Social"},
+  {title:"Telegram Web",url:"https://web.telegram.org/",category:"Social"},
+
+  // News
+  {title:"BBC News",url:"https://www.bbc.com/news",category:"News"},
+  {title:"The Verge",url:"https://www.theverge.com/",category:"News"},
+  {title:"Hacker News",url:"https://news.ycombinator.com/",category:"News"},
+
+  // Learning
+  {title:"freeCodeCamp",url:"https://www.freecodecamp.org/",category:"Learning"},
+  {title:"Khan Academy",url:"https://www.khanacademy.org/",category:"Learning"},
+  {title:"Coursera",url:"https://www.coursera.org/",category:"Learning"},
+  {title:"Udemy",url:"https://www.udemy.com/",category:"Learning"},
+
+  // Entertainment
+  {title:"Netflix",url:"https://www.netflix.com/",category:"Entertainment"},
+  {title:"Spotify",url:"https://open.spotify.com/",category:"Entertainment"},
+  {title:"IMDb",url:"https://www.imdb.com/",category:"Entertainment"},
+
+  // Shopping
+  {title:"Amazon",url:"https://www.amazon.com/",category:"Shopping"},
+  {title:"Flipkart",url:"https://www.flipkart.com/",category:"Shopping"},
+
+  // Finance
+  {title:"Yahoo Finance",url:"https://finance.yahoo.com/",category:"Finance"},
+  {title:"Wise",url:"https://wise.com/",category:"Finance"},
+  {title:"PayPal",url:"https://www.paypal.com/",category:"Finance"},
+
+  // Tools
+  {title:"Speedtest",url:"https://www.speedtest.net/",category:"Tools"},
+  {title:"DownDetector",url:"https://downdetector.com/",category:"Tools"},
+  {title:"Remove.bg",url:"https://www.remove.bg/",category:"Tools"},
+
+  // Other
+  {title:"Wikipedia",url:"https://www.wikipedia.org/",category:"Other"}
 ].sort((a,b)=>a.title.localeCompare(b.title));
 
 /* ===== Helpers & store ===== */
@@ -358,7 +438,7 @@ function normalizeItem(x){
       const h=new URL(url).hostname;
       if(/google|youtube|ytimg/.test(h)) category='Google';
       else if(/github|stack(over)?flow|npmjs|vercel|cloudflare|gitlab|bitbucket|netlify/.test(h)) category='Dev';
-      else if(/linkedin|twitter|x\.com|facebook|instagram/.test(h)) category='Social';
+      else if(/linkedin|twitter|x\.com|facebook|instagram|tiktok|threads|reddit|discord|whatsapp|telegram/.test(h)) category='Social';
       else category='Other';
     }catch{ category='Other'; }
   }
@@ -377,12 +457,12 @@ let shortcuts = readShortcuts() || DEFAULT_SHORTCUTS.slice();
 let categories = readCats() || DEFAULT_CATEGORIES.slice();
 let ui = readUI();
 
-/* ===== Tabs + chips + pager (height fixed by capacity) ===== */
+/* ===== Tabs + chips + pager ===== */
 const tabsRoot=document.getElementById('tabs');
 const chipsRoot=document.getElementById('chips');
 const pagerRoot=document.getElementById('pager');
 
-function allCategoriesOrdered(){ // "All" + user order + unseen
+function allCategoriesOrdered(){
   const seen=new Set(categories);
   const fromData=[...new Set(shortcuts.map(s=>s.category))].filter(c=>!seen.has(c));
   return ['All', ...categories, ...fromData];
@@ -445,7 +525,7 @@ function renderChipsAndPager(){
     chipsRoot.appendChild(a);
   });
 
-  lockChipsHeight(PER_PAGE); // height fixed by capacity
+  lockChipsHeight(PER_PAGE);
 
   pagerRoot.innerHTML='';
   if(totalPages>1){
@@ -468,7 +548,7 @@ renderAll();
 
 let rsId; window.addEventListener('resize',()=>{ clearTimeout(rsId); rsId=setTimeout(()=>lockChipsHeight(Math.max(1,parseInt(ui.perPage||24,10))),120); });
 
-/* ===== Clock (12h) ===== */
+/* ===== Clock ===== */
 (function(){
   const canvas=document.getElementById('dial'), ctx=canvas.getContext('2d');
   const digital=document.getElementById('digital'), dateEl=document.getElementById('date');
@@ -501,7 +581,7 @@ let rsId; window.addEventListener('resize',()=>{ clearTimeout(rsId); rsId=setTim
   requestAnimationFrame(draw);
 })();
 
-/* ===== Google Suggest (JSONP) + local fallback ===== */
+/* ===== Google Suggest + fallback ===== */
 const q=document.getElementById('q'), form=document.getElementById('searchForm'), list=document.getElementById('suggestions');
 let jsonp, jsonpTimer;
 const STATIC_SUGGEST=['weather today','time in tokyo','latest ai news','javascript array methods','css grid examples','react hooks guide','tailwind cheatsheet','web accessibility'];
@@ -592,7 +672,7 @@ document.getElementById('resetAll').addEventListener('click',()=>{
   if(!confirm('Reset ALL to defaults?')) return;
   localStorage.removeItem(LS_SHORTCUTS); localStorage.removeItem(LS_CATS);
   shortcuts=DEFAULT_SHORTCUTS.slice(); categories=DEFAULT_CATEGORIES.slice();
-  ui={tab:'Google',page:0,perPage:24}; writeUI(ui); renderAll(); LOCAL=localBank(); closeKebab();
+  ui={tab:'All',page:0,perPage:24}; writeUI(ui); renderAll(); LOCAL=localBank(); closeKebab();
 });
 document.getElementById('downloadJSON').addEventListener('click',()=>{
   const payload={ categories:categories.slice(), shortcuts:(readShortcuts()||shortcuts).map(normalizeItem) };
@@ -604,17 +684,25 @@ document.getElementById('fileUploadMenu').addEventListener('change', async (e)=>
   const f=e.target.files[0]; if(!f) return;
   try{
     const t=await f.text(); const p=JSON.parse(t);
-    if(Array.isArray(p)){ const cleaned=p.map(normalizeItem).filter(x=>x.title&&x.url); writeShortcuts(cleaned); shortcuts=cleaned; }
-    else if(p && typeof p==='object'){
+    if(Array.isArray(p)){
+      const cleaned=p.map(normalizeItem).filter(x=>x.title&&x.url);
+      writeShortcuts(cleaned); shortcuts=cleaned;
+    }else if(p && typeof p==='object'){
       if(Array.isArray(p.shortcuts)){ const cleaned=p.shortcuts.map(normalizeItem).filter(x=>x.title&&x.url); writeShortcuts(cleaned); shortcuts=cleaned; }
       if(Array.isArray(p.categories)){ const cats=p.categories.map(s=>String(s).trim()).filter(Boolean); if(cats.length){ writeCats(cats); categories=cats; } }
-    } else throw new Error('Invalid JSON');
-    ui.page=0; writeUI(ui); renderAll(); LOCAL=localBank(); alert('Imported successfully.');
+    }else throw new Error('Invalid JSON');
+    // IMPORTANT: ensure the new data is visible
+    ui.tab='All';
+    ui.page=0;
+    ui.perPage=ui.perPage||24;
+    writeUI(ui);
+    renderAll(); LOCAL=localBank();
+    alert('Imported successfully.');
   }catch(err){ alert('Import failed: '+(err?.message||'Invalid file')); }
   e.target.value=''; closeKebab();
 });
 
-/* ===== Modal: category sections (parent with children) ===== */
+/* ===== Modal: category sections ===== */
 const modal=document.getElementById('scModal');
 const sectionList=document.getElementById('sectionList');
 const scClose=document.getElementById('scClose');
@@ -656,7 +744,6 @@ function drawSections(){
     `;
     const rows=wrap.querySelector('.rows');
 
-    // rows for this cat
     const list=workingShortcuts.filter(s=>s.category===cat);
     if(!list.length){
       const d=document.createElement('div'); d.className='row';
@@ -709,15 +796,17 @@ function drawSections(){
       workingShortcuts.forEach(s=>{ if(s.category===cat) s.category=cleaned; });
       workingCats[idx]=cleaned; drawSections();
     });
+
+    // DELETE CATEGORY: delete the category and ALL its shortcuts
+    wrap.querySelector('[data-op="del"]').addEventListener('click',()=>{
+      if(!confirm(`Delete category “${cat}” and all its shortcuts?`)) return;
+      workingShortcuts = workingShortcuts.filter(s=>s.category!==cat); // remove items
+      workingCats = workingCats.filter(c=>c!==cat);                    // remove category
+      drawSections();
+    });
+
     wrap.querySelector('[data-op="add"]').addEventListener('click',()=>{
       workingShortcuts.push({title:'New',url:'https://',category:cat}); drawSections();
-    });
-    wrap.querySelector('[data-op="del"]').addEventListener('click',()=>{
-      if(!confirm(`Delete “${cat}”? You will move its shortcuts.`)) return;
-      let dest=prompt(`Move items from “${cat}” to which category?\nExisting: ${workingCats.filter(c=>c!==cat).join(', ')}`,'Other');
-      dest=(dest||'Other').trim(); if(!workingCats.includes(dest)) workingCats.push(dest);
-      workingShortcuts.forEach(s=>{ if(s.category===cat) s.category=dest; });
-      workingCats=workingCats.filter(c=>c!==cat); drawSections();
     });
 
     sectionList.appendChild(wrap);
@@ -738,11 +827,9 @@ document.getElementById('scSave').addEventListener('click',()=>{
   shortcuts=cleaned; categories=catsClean;
   const tabs=['All',...categories]; if(!tabs.includes(ui.tab)) ui.tab='All';
   ui.page=0; writeUI(ui); renderAll();
-  LOCAL=localBank();    // keep suggestions in sync
+  LOCAL=localBank();
   closeModal();
 });
-
-/* ===== Kebab handlers already above ===== */
 </script>
 </body>
 </html>
